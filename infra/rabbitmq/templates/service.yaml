@@ -7,5 +7,13 @@ metadata:
 spec:
   selector:
     app: {{ .Values.deployment.name }}
-  ports: {{ .Values.service.ports }}
+  ports:
+    - protocol: TCP
+      port: 5672
+      targetPort: 5672
+      name: rabbitmq
+    - protocol: TCP
+      port: 15672
+      targetPort: 15672
+      name: rabbitmq-management
   type: LoadBalancer
