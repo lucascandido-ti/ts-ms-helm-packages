@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configMap.name }}
+data:
+  RABBITMQ_DEFAULT_USER: {{ .Values.data.username }}
+  RABBITMQ_DEFAULT_PASS: {{ .Values.data.password }}

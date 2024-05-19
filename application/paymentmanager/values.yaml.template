@@ -1,0 +1,32 @@
+# Default values for paymentmanager.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+########### ConfigMap ###########
+
+configMap:
+  name: api-payment-settings
+
+########### Deployment ###########
+deployment:
+  name: ts-ms-paymentmanager-deployment
+  container_image: lucascandido/ts-ms-paymentmanager:v4
+  container_port: 4000
+
+########### Service ###########
+service:
+  name: svc-ts-ms-paymentmanager
+  protocol: TCP
+
+########### HPA ###########
+hpa:
+  name: ts-ms-paymentmanager-hpa
+  metrics:
+    type: Resource
+    max: 10
+    min: 1
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 30

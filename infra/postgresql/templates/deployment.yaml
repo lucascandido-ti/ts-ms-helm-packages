@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.deployment.name }}
+  template:
+    metadata:
+      name: {{ .Values.deployment.name }}
+      labels:
+        app: {{ .Values.deployment.name }}
+    spec:
+      containers:
+        - name: {{ .Values.deployment.name }}
+          image: {{ .Values.deployment.container_image }}
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: {{ .Values.deployment.container_port }}
+          volumeMounts:
+            - mountPath: {{ .Values.deployment.volume_path }}
+              name: {{ .Values.deployment.volume_name }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.configMap.name }}
+          resources:
+            limits:
+              memory: 512Mi
+      volumes:
+        - name: {{ .Values.deployment.volume_name }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistentVolumeClaim.name }}

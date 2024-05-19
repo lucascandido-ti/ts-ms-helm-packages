@@ -1,0 +1,30 @@
+# Default values for productionmanager.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+configMap:
+  name: api-production-settings
+
+########### Deployment ###########
+deployment:
+  name: ts-ms-productionmanager-deployment
+  container_image: lucascandido/ts-ms-productionmanager:v3
+  container_port: 6000
+
+########### Service ###########
+service:
+  name: svc-ts-ms-productionmanager
+  protocol: TCP
+
+########### HPA ###########
+hpa:
+  name: ts-ms-productionmanager-hpa
+  metrics:
+    type: Resource
+    max: 10
+    min: 1
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 30

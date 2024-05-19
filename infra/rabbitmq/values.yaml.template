@@ -1,0 +1,43 @@
+# Default values for rabbitmq.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+########### PV and PVC ###########
+persistentVolume:
+  name: rmq-storage
+  storageClassName: rmq-standard
+
+persistentVolumeClaim:
+  name: rmq-pvc
+
+########### ConfigMap ###########
+configMap:
+  name: rmq-configmap
+
+data:
+  username:
+  password:
+
+########### Deployment ###########
+deployment:
+  name: rmq-deployment
+  container_image: rabbitmq:3.8-management
+  container_ports:
+    - containerPort: 5672
+    - containerPort: 15672
+  volume_name: rmq-queue
+  volume_path: /data/rmqdata
+
+########### Service ###########
+service:
+  name: svc-rmq-queue
+  protocol: TCP
+  ports:
+    - protocol: TCP
+      port: 5672
+      targetPort: 5672
+      name: rabbitmq
+    - protocol: TCP
+      port: 15672
+      targetPort: 15672
+      name: rabbitmq-management

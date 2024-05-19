@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.name }}
+spec:
+  template:
+    metadata:
+      name: {{ .Values.deployment.name }}
+      labels:
+        app: {{ .Values.deployment.name }}
+    spec:
+      containers:
+        - name: {{ .Values.deployment.name }}
+          image: {{ .Values.deployment.container_image }}
+          ports:
+            - containerPort: {{ .Values.deployment.container_port }}
+          env:
+            - name: MY_SETTINGS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.configMap.name }}
+                  key: settings.json
+          resources:
+            limits:
+              memory: 512Mi
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.deployment.name }}

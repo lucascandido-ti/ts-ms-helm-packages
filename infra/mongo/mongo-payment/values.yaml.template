@@ -1,0 +1,36 @@
+# Default values for mongo-payment.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+########### PV and PVC ###########
+persistentVolume:
+  name: mongo-payment-storage
+  storageClassName: mongo-payment-standard
+
+persistentVolumeClaim:
+  name: mongo-payment-pvc
+
+########### ConfigMap ###########
+configMap:
+  name: mongo-payment-configmap
+
+database:
+  username:
+  password:
+  instance: payment-manager
+  replica_host: svc-mongodb-payment
+  replica_port: "27017"
+  mongo_command: mongo
+
+########### Deployment ###########
+deployment:
+  name: mongo-payment-deployment
+  container_image: lucascandido/ms-mongodb-payment:latest
+  container_port: 27017
+  volume_name: mongodb
+  volume_path: /data/mongodb
+
+########### Service ###########
+service:
+  name: svc-mongodb-payment
+  protocol: TCP

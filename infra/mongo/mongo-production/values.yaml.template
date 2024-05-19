@@ -1,0 +1,36 @@
+# Default values for mongo-production.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+########### PV and PVC ###########
+persistentVolume:
+  name: mongo-production-storage
+  storageClassName: mongo-production-standard
+
+persistentVolumeClaim:
+  name: mongo-production-pvc
+
+########### ConfigMap ###########
+configMap:
+  name: mongo-production-configmap
+
+database:
+  username:
+  password:
+  instance: production-manager
+  replica_host: svc-mongodb-production
+  replica_port: "27018"
+  mongo_command: mongo
+
+########### Deployment ###########
+deployment:
+  name: mongo-production-deployment
+  container_image: lucascandido/ms-mongodb-production:latest
+  container_port: 27018
+  volume_name: mongodb
+  volume_path: /data/mongodb
+
+########### Service ###########
+service:
+  name: svc-mongodb-production
+  protocol: TCP

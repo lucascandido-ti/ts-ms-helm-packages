@@ -1,0 +1,33 @@
+# Default values for postgresql.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+########### PV and PVC ###########
+persistentVolume:
+  name: pg-storage
+  storageClassName: pg-standard
+
+persistentVolumeClaim:
+  name: postgres-pvc
+
+########### ConfigMap ###########
+configMap:
+  name: pg-configmap
+
+database:
+  username:
+  password:
+  instance: ordermanager
+
+########### Deployment ###########
+deployment:
+  name: pg-deployment
+  container_image: postgres:latest
+  container_port: 5432
+  volume_name: postgresdb
+  volume_path: /data/pgdb
+
+########### Service ###########
+service:
+  name: svc-postgres
+  protocol: TCP

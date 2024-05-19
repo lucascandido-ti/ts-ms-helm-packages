@@ -1,0 +1,29 @@
+# Default values for ordermanager.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+########### Deployment ###########
+deployment:
+  name: ms-ordermanager-deployment
+  container_image: lucascandido/ts-ms-ordermanager:latest
+  container_port: 5000
+  volume_name: rmq-queue
+  volume_path: /data/rmqdata
+
+########### Service ###########
+service:
+  name: svc-ms-ordermanager
+  protocol: TCP
+
+########### HPA ###########
+hpa:
+  name: ms-ordermanager-hpa
+  metrics:
+    type: Resource
+    max: 10
+    min: 1
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 30

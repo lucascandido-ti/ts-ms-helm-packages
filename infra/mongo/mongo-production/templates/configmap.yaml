@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configMap.name }}
+data:
+  MONGO_INITDB_ROOT_USERNAME: {{ .Values.database.username }}
+  MONGO_INITDB_ROOT_PASSWORD: {{ .Values.database.password }}
+  MONGO_INITDB_DATABASE: {{ .Values.database.instance }}
+  MONGO_REPLICA_HOST: {{ .Values.database.replica_host }}
+  MONGO_REPLICA_PORT: {{ .Values.database.replica_port }}
+  MONGO_COMMAND: {{ .Values.database.mongo_command }}
